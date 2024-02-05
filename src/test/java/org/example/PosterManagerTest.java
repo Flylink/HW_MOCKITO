@@ -13,7 +13,10 @@ public class PosterManagerTest {
         manager.addMovie(movie1);
         manager.addMovie(movie2);
 
-        Assertions.assertEquals(2, manager.findAll().size());
+        CoverMovie[] expectedMovies = {movie1, movie2};
+        CoverMovie[] actualMovies = manager.findAll().toArray(new CoverMovie[0]);
+
+        Assertions.assertArrayEquals(expectedMovies, actualMovies);
     }
 
     @Test
@@ -26,13 +29,16 @@ public class PosterManagerTest {
         manager.addMovie(movie2);
         manager.addMovie(movie3);
 
-        Assertions.assertEquals(3, manager.findLast().size());
+        CoverMovie[] expectedMovies = {movie1, movie2, movie3};
+        CoverMovie[] actualMovies = manager.findAll().toArray(new CoverMovie[0]);
+
+        Assertions.assertArrayEquals(expectedMovies, actualMovies);
 
         PosterManager limitedManager = new PosterManager(2);
         limitedManager.addMovie(movie1);
         limitedManager.addMovie(movie2);
         limitedManager.addMovie(movie3);
 
-        Assertions.assertEquals(2, limitedManager.findLast().size());
+        Assertions.assertArrayEquals(expectedMovies, actualMovies);
     }
 }
