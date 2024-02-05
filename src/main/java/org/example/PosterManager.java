@@ -1,34 +1,42 @@
 package org.example;
 
-import java.util.ArrayList;
-import java.util.List;
-
 public class PosterManager {
-    private List<CoverMovie> movies = new ArrayList<>();
+    private CoverMovie[] movies;
     private int limit;
 
     public PosterManager() {
         this.limit = 5; // Устанавливаем лимит по умолчанию в 5
+        this.movies = new CoverMovie[0];
     }
 
     public PosterManager(int limit) {
         this.limit = limit; // Устанавливаем пользовательский лимит
+        this.movies = new CoverMovie[0];
     }
 
     public void addMovie(CoverMovie movie) {
-        movies.add(movie);
+        CoverMovie[] updatedMovies = new CoverMovie[movies.length + 1];
+        System.arraycopy(movies, 0, updatedMovies, 0, movies.length);
+        updatedMovies[movies.length] = movie;
+        movies = updatedMovies;
     }
 
-    public List<CoverMovie> findAll() {
-        return new ArrayList<>(movies);
+    public CoverMovie[] findAll() {
+        return movies;
     }
 
-    public List<CoverMovie> findLast() {
-        int resultLength = Math.min(limit, movies.size());
+    public CoverMovie[] findLast() {
+        int resultLength;
+        if (limit <= movies.length) {
+            resultLength = limit;
+        } else {
+            resultLength = movies.length;
+        }
         CoverMovie[] result = new CoverMovie[resultLength];
         for (int i = 0; i < resultLength; i++) {
-            result[i] = movies.get(movies.size() - i - 1);
+            result[i] = movies[movies.length - 1 - i];
         }
-        return List.of(result);
+        return result;
     }
 }
+
